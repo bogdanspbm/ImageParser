@@ -40,7 +40,7 @@ public class ExcelEditor {
         return null;
     }
 
-    private void addRow(List<String> elements) {
+    public void addRow(List<String> elements) {
         HSSFSheet sheet = getFirstSheet();
         int lastRowIndex = sheet.getPhysicalNumberOfRows();
         HSSFRow row = sheet.createRow(lastRowIndex);

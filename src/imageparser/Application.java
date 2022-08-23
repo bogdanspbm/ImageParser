@@ -1,10 +1,12 @@
 package imageparser;
 
 import java.io.File;
+import java.util.List;
 import javax.swing.JLabel;
 import utils.ExcelEditor;
 import static utils.FileChooser.openFile;
-import static utils.GlobalFunctiona.urlToSearchURL;
+import utils.GlobalFunctions;
+import static utils.GlobalFunctions.urlToSearchURL;
 import utils.URLDatabase;
 import utils.URLParser;
 import widgets.JURLPanel;
@@ -38,7 +40,8 @@ public class Application extends javax.swing.JFrame {
         bSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(400, 300));
+        setMinimumSize(new java.awt.Dimension(600, 300));
+        setPreferredSize(new java.awt.Dimension(600, 300));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         bFileSchoose.setText("Выбор файла");
@@ -140,11 +143,22 @@ public class Application extends javax.swing.JFrame {
                 public void run() {
                     for (String url : database.getURLs()) {
                         URLParser parser = new URLParser(url);
+
                         boolean flag = parser.parse();
                         pContent.add(new JURLPanel(url, flag));
+                        editor.addRow(GlobalFunctions.getRowByURL(url, flag));
+
+                        if (saveFlag && editor != null) {
+                            saveFlag = false;
+                            editor.saveFile();
+                            pContent.add(new JURLPanel("Файл сохранен", true));
+                        }
+
                         pContent.updateUI();
                     }
+                    editor.saveFileAndClose();
                 }
+
             };
             Thread thread = new Thread(task);
             thread.start();
