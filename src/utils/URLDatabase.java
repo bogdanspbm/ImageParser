@@ -14,22 +14,26 @@ public class URLDatabase {
     public URLDatabase() {
 
     }
-    
-    public int getLinesCount(){
-        return lines.size();
+
+    public int getLinesCount() {
+        if (lines != null) {
+            return lines.size();
+        }
+        return 0;
     }
 
     public void parseFile(File file) {
         try {
-            this.file = file;
-            lines = Files.readAllLines(Paths.get(file.getAbsolutePath()), StandardCharsets.US_ASCII);
+            if (file != null) {
+                this.file = file;
+                lines = Files.readAllLines(Paths.get(file.getAbsolutePath()), StandardCharsets.US_ASCII);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    
-    public List<String> getURLs(){
+
+    public List<String> getURLs() {
         return lines;
     }
 }

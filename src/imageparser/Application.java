@@ -141,7 +141,11 @@ public class Application extends javax.swing.JFrame {
         if (database.getURLs() != null) {
             Runnable task = new Runnable() {
                 public void run() {
-                    for (String url : database.getURLs()) {
+                    for (int i = editor.getLastRow(); i < database.getURLs().size(); i++) {
+                        
+                        tLineCount.setText("Обработано " + (i + 1) + " / " + database.getURLs().size());
+                        
+                        String url = database.getURLs().get(i);
                         URLParser parser = new URLParser(url);
 
                         boolean flag = parser.parse();

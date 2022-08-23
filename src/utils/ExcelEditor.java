@@ -29,6 +29,10 @@ public class ExcelEditor {
 
     }
 
+    public int getLastRow() {
+        return getFirstSheet().getPhysicalNumberOfRows();
+    }
+
     private HSSFSheet getFirstSheet() {
         if (workbook != null) {
             if (workbook.getNumberOfSheets() == 0) {
